@@ -1,0 +1,5 @@
+Program title:UniProf
+Author:Tymoteusz Apriasz
+LICENSE:All Rights Reserved
+DESCRIPTION: Game UniProf is a single-developer game made against the
+             hilarious behaiour of particular teachers in Polish education system
