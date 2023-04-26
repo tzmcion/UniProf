@@ -2,6 +2,9 @@
 #include "../Helpers/Colors.h"
 #include "./Field.h"
 
+#ifndef MapManagement_h
+#define MapManagement_h
+
 #define WINDOW_WIDTH 1080
 #define WINDOW_HEIGHT 720
 
@@ -57,3 +60,5 @@ class MapManagement{
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
         };
 };
+
+#endif

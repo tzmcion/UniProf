@@ -100,8 +100,9 @@ std::vector<MapManagement::f_check> MapManagement::path_finder(int x, int y, int
     parent.y = y;
     parent.parent_id = -1;
     checks.push_back(parent);
-    int found_id = 0;
+    int found_id = 0, counter = 0;
     while(!is_found){
+        counter++;
         for(int a = 0; a < checks.size(); a++){
             if(checks[a].x == d_x and checks[a].y == d_y){
                 is_found = true;
@@ -150,8 +151,11 @@ std::vector<MapManagement::f_check> MapManagement::path_finder(int x, int y, int
                 fields[c_x][c_y].checked = true;
             }
         }
+        if(counter > 1000){
+            checks.clear();
+            return checks;
+        }
     }
-
     std::vector<f_check> moves;
     while(1){
         found_id = checks[found_id].parent_id;

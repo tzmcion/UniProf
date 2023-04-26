@@ -3,6 +3,7 @@
 #include "./hero.h"
 #include "./MapManagement.h"
 #include "./static_objects.h"
+#include "./Input_Manager.h"
 
 class Engine{
     public:

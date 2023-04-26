@@ -1,5 +1,7 @@
 #include "character.h"
 
+#ifndef Hero_h
+#define Hero_h
 
 class Hero : public Character{
 
@@ -35,3 +37,5 @@ class Hero : public Character{
         int walk_anim_id = 2;
         const int move_time = 160;
 };
+
+#endif

@@ -18,15 +18,21 @@ Character::Character(SDL_Renderer *r,const char* img_path,int width, int height,
         BLUE(" Generating Default Asset in exchange... \n");
         surface = IMG_Load("./Assets/laughing.png");
     }
-    Phase ph;
+    Character_Data ph;
     ph.rect.w = width;
     ph.rect.h = height;
     ph.rect.x = 60;
     ph.rect.y = 60;
     ph.texture = SDL_CreateTextureFromSurface(ren,surface); 
     textures.push_back(ph.texture);
-    phases.push_back(ph);
+    c_data = ph;
     SDL_FreeSurface(surface);
+    surface = IMG_Load("./Assets/chat.png");
+    Character_Data chat_box;
+    chat_box.render = false;
+    chat_box.texture = SDL_CreateTextureFromSurface(ren,surface);
+    SDL_FreeSurface(surface);
+    additional_renders.push_back(chat_box);
     timer = new Timer();
     phase_timer = new Timer();
     phases_length++;
@@ -58,7 +64,7 @@ void Character::add_phase(const char* img_path){
 
 void Character::set_phase(int number){
     if(phase_timer->get() >= rand() % 600 + 1000 && is_basic_phase && number == 0){
-        phases[phase_number].texture = textures[current_tex];
+        c_data.texture = textures[current_tex];
         if(current_tex +1 < 2){
             current_tex+=1;
         }else{
@@ -69,8 +75,12 @@ void Character::set_phase(int number){
 }
 
 void Character::set_static_position(int x, int y, int field_size){
-    phases[phase_number].rect.x = x * field_size;
-    phases[phase_number].rect.y = y * field_size;
+    c_data.rect.x = x * field_size;
+    c_data.rect.y = y * field_size;
+    additional_renders[0].rect.x = c_data.rect.x + c_data.rect.w/1.3;
+    additional_renders[0].rect.y = c_data.rect.y - c_data.rect.h/2;
+    additional_renders[0].rect.h = 40;
+    additional_renders[0].rect.w = 40;
 }
 
 void Character::update(int F_SIZE){
@@ -78,15 +88,29 @@ void Character::update(int F_SIZE){
 }
 
 void Character::render(){
-    SDL_RenderCopy(ren,phases[phase_number].texture,NULL,&phases[phase_number].rect);
+    for(int x = 0; x < additional_renders.size(); x++){
+        if(additional_renders[x].render){
+            SDL_RenderCopy(ren,additional_renders[x].texture,NULL,&additional_renders[x].rect);
+        }
+    }
+    SDL_RenderCopy(ren,c_data.texture,NULL,&c_data.rect);
 }
 
 int Character::get_x_pos(){
-    return Character::phases[phase_number].rect.x;
+    return Character::c_data.rect.x;
 }
 
 int Character::get_y_pos(){
-    return Character::phases[phase_number].rect.y;
+    return Character::c_data.rect.y;
+}
+
+void Character::cloud_if_has_mouse(int x, int y){
+    additional_renders[0].render = false;
+    if(x > c_data.rect.x && x < c_data.rect.x + c_data.rect.w){
+        if(y > c_data.rect.y && y < c_data.rect.y + c_data.rect.h){
+           additional_renders[0].render = true;
+        }
+    }
 }
 
 //Private Functions

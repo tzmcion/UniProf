@@ -1,5 +1,7 @@
-#include "../Assets/All.h"
+#ifndef Character_h
+#define Character_h
 
+#include "../Assets/All.h"
 #include "./Timer.h"
 #include "../Helpers/Colors.h"
 
@@ -14,20 +16,25 @@ class Character{
         void set_static_position(int x, int y, int field_size);
         void update(int F_SIZE);
         void render();
+        void cloud_if_has_mouse(int x, int y);
 
         int get_x_pos();
         int get_y_pos();
 
-        struct Phase{
+        struct Character_Data{
             SDL_Texture *texture;
             SDL_Rect rect;
+            bool render;
         };
         Timer *timer = nullptr, *phase_timer = nullptr;
-        std::vector<Phase> phases;
-        std::vector<SDL_Texture* > textures; 
+        Character_Data c_data;
+        std::vector<SDL_Texture* > textures;
+        std::vector<Character_Data> additional_renders;
         SDL_Renderer *ren;
         SDL_Surface *surface;
         SDL_Texture *texture_swp;
         int phase_number = 0, phases_length = 0, current_tex = 0;
         bool is_basic_phase = true;
 };
+
+#endif

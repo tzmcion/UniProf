@@ -48,14 +48,15 @@ void Engine::HandleEvents(){
             isRunning = false;
             break;
         case SDL_MOUSEBUTTONDOWN:
+            Input_Manager::handle_mouse_click(hero,map);
+        case SDL_MOUSEMOTION:
             int x,y;
             SDL_GetMouseState(&x,&y);
-            map->get_map_field_by_coords(x,y,x,y);
-            if(map->get_map_field_id(x,y) == 0){
-                std::vector<std::string> moves;
-                map->find_path_from(x,y,hero->get_x_pos() / MapManagement::F_SIZE,hero->get_y_pos() / MapManagement::F_SIZE,moves);
-                hero->set_position(moves,MapManagement::F_SIZE);
+            for(int a = 0; a < characters.size(); a++){
+                Input_Manager::handle_mouse_movement(characters[a],x,y);
             }
+            Input_Manager::handle_mouse_movement(hero,x,y);
+            break;
         default:
             break;
     }

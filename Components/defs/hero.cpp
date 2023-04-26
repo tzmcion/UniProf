@@ -12,8 +12,8 @@ Hero::Hero(SDL_Renderer *r,const char* img_path,int width, int height):   Charac
 Hero::~Hero(){};
 
 void Hero::set_position(std::vector<std::string> moves, int F_SIZE){
-    int l_x = phases[phase_number].rect.x / F_SIZE;
-    int l_y = phases[phase_number].rect.y / F_SIZE;
+    int l_x = c_data.rect.x / F_SIZE;
+    int l_y = c_data.rect.y / F_SIZE;
     if(dests.size() > 0){
             destination_data a = dests[0];
             dests.clear();
@@ -38,6 +38,9 @@ void Hero::set_position(std::vector<std::string> moves, int F_SIZE){
         }
         dests.push_back(data);
     }
+    surface = IMG_Load("./Assets/love.png");
+    additional_renders[0].texture = SDL_CreateTextureFromSurface(ren,surface);
+    SDL_FreeSurface(surface);
     // }
     // for(int b = 1; b < std::abs(l_x - x)+1; b++){
     //     destination_data data;
@@ -73,8 +76,8 @@ void Hero::update(int F_SIZE){
     set_phase(dests.size());
     if(!ismoving){
         if(dests.size() > 0){
-            last_x = phases[phase_number].rect.x;
-            last_y = phases[phase_number].rect.y;
+            last_x = c_data.rect.x;
+            last_y = c_data.rect.y;
             ismoving = true;
             timer->start();
         }
@@ -108,7 +111,7 @@ void Hero::handle_walk_phase_change(){
     if(ismoving){
         is_basic_phase = false;
         if(walk_anim_timer->get() > 300){
-            phases[phase_number].texture = textures[walk_anim_id];
+            c_data.texture = textures[walk_anim_id];
             walk_anim_id + 1 > 3 ? walk_anim_id = 2: walk_anim_id += 1;
             walk_anim_timer->start();
         }
@@ -120,22 +123,30 @@ void Hero::handle_walk_phase_change(){
 
 void Hero::Move_vertically_in_time(int dest_x, double milliseconds){
     double percentage = timer->get()/milliseconds;
-    phases[phase_number].rect.x = std::round(double(last_x) + std::round(double(dest_x)*percentage));
+    c_data.rect.x = std::round(double(last_x) + std::round(double(dest_x)*percentage));
+    additional_renders[0].rect.x = c_data.rect.x + c_data.rect.w/1.5;
+    additional_renders[0].rect.y = c_data.rect.y - c_data.rect.h/2;
+    additional_renders[0].rect.h = 40;
+    additional_renders[0].rect.w = 40;
     if(percentage >= 1){
         energy -= 4;
         ismoving = false;
         dests.erase(dests.begin());
-        phases[phase_number].rect.x = last_x + dest_x;
+        c_data.rect.x = last_x + dest_x;
     }
 }
 
 void Hero::Move_horizontally_in_time(int dest_y, double milliseconds){
     double percentage = timer->get()/milliseconds + 0.05;
-    phases[phase_number].rect.y = std::round(double(last_y) + std::round(double(dest_y)*percentage));
+    c_data.rect.y = std::round(double(last_y) + std::round(double(dest_y)*percentage));
+    additional_renders[0].rect.x = c_data.rect.x + c_data.rect.w/1.5;
+    additional_renders[0].rect.y = c_data.rect.y - c_data.rect.h/2;
+    additional_renders[0].rect.h = 40;
+    additional_renders[0].rect.w = 40;
     if(percentage >= 1){
         energy -= 4;
         ismoving = false;
         dests.erase(dests.begin());
-        phases[phase_number].rect.y = last_y + dest_y;
+        c_data.rect.y = last_y + dest_y;
     }
 }
