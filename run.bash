@@ -10,6 +10,7 @@ g++ main.cpp ./Components/defs/engine.cpp \
  ./Components/defs/Field.cpp \
  ./Components/defs/static_objects.cpp \
  ./Components/defs/Input_Manager.cpp \
- -o program.out -w -lSDL2 -lSDL2_image
+ ./Components/defs/messenger.cpp \
+ -o program.out -w -lSDL2 -lSDL2_image -lSDL2_ttf
 chmod 777 ./program.out
 ./program.out

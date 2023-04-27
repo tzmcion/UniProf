@@ -27,16 +27,11 @@ Character::Character(SDL_Renderer *r,const char* img_path,int width, int height,
     textures.push_back(ph.texture);
     c_data = ph;
     SDL_FreeSurface(surface);
-    surface = IMG_Load("./Assets/chat.png");
-    Character_Data chat_box;
-    chat_box.render = false;
-    chat_box.texture = SDL_CreateTextureFromSurface(ren,surface);
-    SDL_FreeSurface(surface);
-    additional_renders.push_back(chat_box);
     timer = new Timer();
     phase_timer = new Timer();
-    phases_length++;
     phase_timer->start();
+
+    messenger = new Messenger(ren,"./Assets/fonts/Roboto-Regular.ttf", "./Assets/chat.png",8);
 }
 
 Character::~Character(){}
@@ -58,7 +53,6 @@ void Character::add_phase(const char* img_path){
     }
     textures.push_back(SDL_CreateTextureFromSurface(ren,surface));
     SDL_FreeSurface(surface);
-    phases_length++;
 }
 
 
@@ -77,10 +71,6 @@ void Character::set_phase(int number){
 void Character::set_static_position(int x, int y, int field_size){
     c_data.rect.x = x * field_size;
     c_data.rect.y = y * field_size;
-    additional_renders[0].rect.x = c_data.rect.x + c_data.rect.w/1.3;
-    additional_renders[0].rect.y = c_data.rect.y - c_data.rect.h/2;
-    additional_renders[0].rect.h = 40;
-    additional_renders[0].rect.w = 40;
 }
 
 void Character::update(int F_SIZE){
@@ -88,12 +78,10 @@ void Character::update(int F_SIZE){
 }
 
 void Character::render(){
-    for(int x = 0; x < additional_renders.size(); x++){
-        if(additional_renders[x].render){
-            SDL_RenderCopy(ren,additional_renders[x].texture,NULL,&additional_renders[x].rect);
-        }
-    }
     SDL_RenderCopy(ren,c_data.texture,NULL,&c_data.rect);
+    if(render_message){
+        messenger->write(answers[which_answer],c_data.rect.x + c_data.rect.w/1.3,c_data.rect.y - c_data.rect.h/2);
+    }
 }
 
 int Character::get_x_pos(){
@@ -105,11 +93,14 @@ int Character::get_y_pos(){
 }
 
 void Character::cloud_if_has_mouse(int x, int y){
-    additional_renders[0].render = false;
+    render_message = false;
     if(x > c_data.rect.x && x < c_data.rect.x + c_data.rect.w){
         if(y > c_data.rect.y && y < c_data.rect.y + c_data.rect.h){
-           additional_renders[0].render = true;
+           render_message = true;
         }
+    }
+    if(!render_message){
+        which_answer = rand()% sizeof(answers) / sizeof(answers[0]);
     }
 }
 

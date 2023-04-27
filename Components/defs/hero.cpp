@@ -38,9 +38,6 @@ void Hero::set_position(std::vector<std::string> moves, int F_SIZE){
         }
         dests.push_back(data);
     }
-    surface = IMG_Load("./Assets/love.png");
-    additional_renders[0].texture = SDL_CreateTextureFromSurface(ren,surface);
-    SDL_FreeSurface(surface);
     // }
     // for(int b = 1; b < std::abs(l_x - x)+1; b++){
     //     destination_data data;
@@ -124,10 +121,6 @@ void Hero::handle_walk_phase_change(){
 void Hero::Move_vertically_in_time(int dest_x, double milliseconds){
     double percentage = timer->get()/milliseconds;
     c_data.rect.x = std::round(double(last_x) + std::round(double(dest_x)*percentage));
-    additional_renders[0].rect.x = c_data.rect.x + c_data.rect.w/1.5;
-    additional_renders[0].rect.y = c_data.rect.y - c_data.rect.h/2;
-    additional_renders[0].rect.h = 40;
-    additional_renders[0].rect.w = 40;
     if(percentage >= 1){
         energy -= 4;
         ismoving = false;
@@ -139,10 +132,6 @@ void Hero::Move_vertically_in_time(int dest_x, double milliseconds){
 void Hero::Move_horizontally_in_time(int dest_y, double milliseconds){
     double percentage = timer->get()/milliseconds + 0.05;
     c_data.rect.y = std::round(double(last_y) + std::round(double(dest_y)*percentage));
-    additional_renders[0].rect.x = c_data.rect.x + c_data.rect.w/1.5;
-    additional_renders[0].rect.y = c_data.rect.y - c_data.rect.h/2;
-    additional_renders[0].rect.h = 40;
-    additional_renders[0].rect.w = 40;
     if(percentage >= 1){
         energy -= 4;
         ismoving = false;

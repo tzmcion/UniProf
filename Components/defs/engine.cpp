@@ -18,19 +18,19 @@ Engine::Engine(const char* title, int x_pos, int y_pos ,int width, int height, U
         if(renderer) GREEN("[READY]\n");
         WHITE("Initializing Game Loop...\n");
     }
-    hero = new Hero(renderer,"./Assets/hero2.png",MapManagement::F_SIZE*0.85,MapManagement::F_SIZE*1);
+    hero = new Hero(renderer,"./Assets/hero/hero2.png",MapManagement::F_SIZE*0.8,MapManagement::F_SIZE*0.95);
     characters.push_back(new Character(renderer,"./Assets/Char2/c1.png",MapManagement::F_SIZE,MapManagement::F_SIZE,"Character 1"));
     characters.push_back(new Character(renderer,"./Assets/Char1/c1.png",MapManagement::F_SIZE,MapManagement::F_SIZE,"Character 1"));
     st = new Static_objects(renderer);
-    hero->add_phase("./Assets/hero3.png");
-    hero->add_phase("./Assets/hero_walk_1.png");
-    hero->add_phase("./Assets/hero_walk_2.png");
+    hero->add_phase("./Assets/hero/hero3.png");
+    hero->add_phase("./Assets/hero/hero_walk_1.png");
+    hero->add_phase("./Assets/hero/hero_walk_2.png");
     characters[0]->add_phase("./Assets/Char2/c2.png");
     characters[1]->add_phase("./Assets/Char1/c2.png");
     characters[0]->set_static_position(4,5,MapManagement::F_SIZE);
-    characters[1]->set_static_position(4,6,MapManagement::F_SIZE);
+    characters[1]->set_static_position(4,7,MapManagement::F_SIZE);
     st->add_static_object("../Assets/Rim.png",10,550,700*0.8,200*0.8);
-    st->add_static_object("./Assets/hero_face.png",20,555,200*0.7,200 *0.7);
+    st->add_static_object("./Assets/hero/hero_face.png",20,555,200*0.7,200 *0.7);
     map = new MapManagement(renderer);
 }
 

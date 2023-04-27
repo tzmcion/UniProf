@@ -16,7 +16,7 @@ class Hero : public Character{
     private:
         int patience = 100;
         int energy = 100;
-
+        const std::string answers[7] = {"kay","heh, that's me", "love you", "what the hell man OMG", "I was there", "FFL - Fortran For Life"};
         //So the stamina will be getting less and less empty every second character moves
         Timer *refil = nullptr;
         //Functions and variables for animations

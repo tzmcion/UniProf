@@ -15,7 +15,7 @@ MapManagement::MapManagement(SDL_Renderer *renderer){
     GREEN("[DONE]");
     SDL_SetRenderDrawBlendMode(renderer,SDL_BLENDMODE_BLEND);
     RESET("\nLoading Textures for Walls\Floor... ");
-    std::vector<std::string> paths = {"./Assets/floor.png", "./Assets/wall.png", "./Assets/desk.png","./Assets/toilet_paper.png"};
+    std::vector<std::string> paths = {"./Assets/floor.png", "./Assets/wall.png", "./Assets/desk.png","./Assets/toilet_paper.png","./Assets/board.png","./Assets/trash.png"};
     field = new Field(ren,paths,F_SIZE,F_SIZE);
     GREEN("[DONE]");
 
