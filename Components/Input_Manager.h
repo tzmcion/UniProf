@@ -1,4 +1,5 @@
-#include "../Assets/All.h"
+#pragma once
+#include "../Helpers/All.h"
 #include "./character.h"
 #include "./MapManagement.h"
 #include "./hero.h"

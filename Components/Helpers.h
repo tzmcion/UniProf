@@ -1,4 +1,4 @@
-#include "../Assets/All.h"
+#include "../Helpers/All.h"
 
 #ifndef HELPERS_H_INCLUDED
 #define HELPERS_H_INCLUDED

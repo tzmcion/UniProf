@@ -1,6 +1,7 @@
-#include "../Assets/All.h"
+#include "../Helpers/All.h"
 #include "../Helpers/Colors.h"
 #include "./Field.h"
+#include "./Board.h"
 
 #ifndef MapManagement_h
 #define MapManagement_h
@@ -14,11 +15,15 @@ class MapManagement{
         ~MapManagement();
 
         void renderMap();
+        void higher_render();
 
+        void set_map(int map[12][18]);
         int get_map_field(int col, int row);
         void set_map_field(int value, int col, int row);
         int get_map_field_id(int x, int y);
         int get_map_field_by_coords(int x_cor, int y_cor, int &col, int &row);
+        void handle_mouse_movement(int x, int y);
+        void handle_mouse_click(int x, int y);
 
         void find_path_from(int x, int y,int curr_x , int curr_y, std::vector<std::string> &moves);
 
@@ -30,6 +35,7 @@ class MapManagement{
         int **board;
         std::string rim_color;
         Field *field = nullptr;
+        std::vector<Board*> board_objects;
         SDL_Renderer *ren;
 
         struct M_field{

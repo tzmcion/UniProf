@@ -100,8 +100,16 @@ void Character::cloud_if_has_mouse(int x, int y){
         }
     }
     if(!render_message){
-        which_answer = rand()% sizeof(answers) / sizeof(answers[0]);
+        which_answer = rand()% answers_sum;
     }
+}
+
+void Character::set_answers(std::string data[], int answers_quantity){
+    answers = new std::string[answers_quantity];
+    for(int x = 0; x < answers_quantity; x++){
+        answers[x] = data[x];
+    }
+    answers_sum = answers_quantity;
 }
 
 //Private Functions

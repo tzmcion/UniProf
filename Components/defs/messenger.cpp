@@ -28,3 +28,33 @@ void Messenger::write(std::string txt, int x, int y){
     SDL_RenderCopy(ren,message,NULL,&rect);
     SDL_FreeSurface(surf);
 }
+
+void Messenger::write_blank(std::string txt, int x, int y){
+    surf = TTF_RenderText_Solid(font,txt.c_str(),color);
+    message = SDL_CreateTextureFromSurface(ren,surf);
+    rect.x = x;
+    rect.y = y;
+    rect.h = surf->h;
+    rect.w = surf->w;
+    SDL_RenderCopy(ren,message,NULL,&rect);
+    SDL_FreeSurface(surf);
+}
+
+void Messenger::write_box(std::string txt, int x, int y, int &w, int &h){
+    surf = TTF_RenderText_Solid(font,txt.c_str(),color);
+    message = SDL_CreateTextureFromSurface(ren,surf);
+    SDL_SetRenderDrawColor(ren,0,0,0,100);
+    rect.x = x;
+    rect.y = y-5;
+    rect.h = surf->h + 5;
+    rect.w = surf->w + 20;
+    w = surf->w + 20;
+    h = surf->h + 5;
+    SDL_RenderFillRect(ren,&rect);
+    rect.x += 10;
+    rect.y += rect.h/20;
+    rect.w = surf->w;
+    rect.h = surf->h;
+    SDL_RenderCopy(ren,message,NULL,&rect);
+    SDL_FreeSurface(surf);
+}

@@ -1,4 +1,5 @@
-#include "../Assets/All.h"
+#pragma once
+#include "../Helpers/All.h"
 
 class Static_objects{
     public:

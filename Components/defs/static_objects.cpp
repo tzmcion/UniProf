@@ -5,6 +5,10 @@ Static_objects::Static_objects(SDL_Renderer *r){
 }
 
 Static_objects::~Static_objects(){
+    for(int x = 0; x < objects.size(); x++){
+        SDL_DestroyTexture(objects[x].texture);        
+    }
+    SDL_DestroyTexture(txt);
 
 }
 

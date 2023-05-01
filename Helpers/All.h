@@ -8,7 +8,8 @@
 #include <thread>
 #include <iostream>
 #include <fstream>
-#include "../Helpers/Colors.h"
+#include "./Colors.h"
+#include "./Texture_Loader.h"
 
 // using namespace std;
 

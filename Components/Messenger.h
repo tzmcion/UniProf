@@ -1,4 +1,4 @@
-#include "../Assets/All.h"
+#include "../Helpers/All.h"
 
 #ifndef messenger_h
 #define messenger_h
@@ -9,6 +9,8 @@ class Messenger{
         ~Messenger();
 
         void write(std::string txt, int x, int y);
+        void write_blank(std::string,int x, int y);
+        void write_box(std::string, int x, int y, int &w, int &h);
         void set_color(Uint8[3]);
 
     private:

@@ -1,7 +1,7 @@
 #ifndef Character_h
 #define Character_h
 
-#include "../Assets/All.h"
+#include "../Helpers/All.h"
 #include "./Timer.h"
 #include "../Helpers/Colors.h"
 #include "./Messenger.h"
@@ -15,6 +15,7 @@ class Character{
         void add_phase(const char* img_path);
         void set_phase(int number);
         void set_static_position(int x, int y, int field_size);
+        void set_answers(std::string data[], int answers_quantity);
         void update(int F_SIZE);
         void render();
         void cloud_if_has_mouse(int x, int y);
@@ -38,9 +39,8 @@ class Character{
         Messenger *messenger = nullptr;
         int current_tex = 0;
         bool is_basic_phase = true, render_message = false;
-        const std::string answers[13] = {"what ?", "NO!", "Fuck off...", "Not now...", "HAHA!", "You're funny", "please...","NO WAY", "I'm getting bored of you...",
-                                        "Wanna play a game?", "Sometimes I just wanna become a priest", "Are you trying to insult me?", "GGAG - GO GET A GIRLFRIEND"};
-        int which_answer = 0;
+        std::string *answers = nullptr;
+        int which_answer = 0, answers_sum = 7;
 };
 
 #endif

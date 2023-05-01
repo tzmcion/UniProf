@@ -20,7 +20,9 @@ void Field::render_field(int id,int x,int y){
         SDL_RenderCopy(ren,textures[0],NULL,&rect);
     }
     if(id < textures.size()){
-        SDL_RenderCopy(ren,textures[id],NULL,&rect);
+        if(id != 4){
+            SDL_RenderCopy(ren,textures[id],NULL,&rect);
+        }
     }
 }
 

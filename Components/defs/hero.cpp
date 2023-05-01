@@ -7,6 +7,9 @@ Hero::Hero(SDL_Renderer *r,const char* img_path,int width, int height):   Charac
     timer->start();
     refil = new Timer();
     refil->start();
+    add_phase("./Assets/hero/hero3.png");
+    add_phase("./Assets/hero/hero_walk_1.png");
+    add_phase("./Assets/hero/hero_walk_2.png");
 };
 
 Hero::~Hero(){};

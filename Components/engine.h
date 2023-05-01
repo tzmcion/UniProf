@@ -4,13 +4,13 @@
 #include "./MapManagement.h"
 #include "./static_objects.h"
 #include "./Input_Manager.h"
+#include "../Levels/Base_Level.h"
+#include "../Levels/Level1.h"
 
 class Engine{
     public:
         Engine(const char* title, int x_pos, int y_pos ,int width, int height, Uint32 flags);
         ~Engine();
-
-        void init();
 
         void HandleEvents();
         void Update();
@@ -26,4 +26,7 @@ class Engine{
 
         MapManagement *map = nullptr;
         Hero *hero = nullptr;
+
+        Base_Level *levels[10];
+        int current_level = 0;
 };

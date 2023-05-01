@@ -18,27 +18,11 @@ Engine::Engine(const char* title, int x_pos, int y_pos ,int width, int height, U
         if(renderer) GREEN("[READY]\n");
         WHITE("Initializing Game Loop...\n");
     }
-    hero = new Hero(renderer,"./Assets/hero/hero2.png",MapManagement::F_SIZE*0.8,MapManagement::F_SIZE*0.95);
-    characters.push_back(new Character(renderer,"./Assets/Char2/c1.png",MapManagement::F_SIZE,MapManagement::F_SIZE,"Character 1"));
-    characters.push_back(new Character(renderer,"./Assets/Char1/c1.png",MapManagement::F_SIZE,MapManagement::F_SIZE,"Character 1"));
-    st = new Static_objects(renderer);
-    hero->add_phase("./Assets/hero/hero3.png");
-    hero->add_phase("./Assets/hero/hero_walk_1.png");
-    hero->add_phase("./Assets/hero/hero_walk_2.png");
-    characters[0]->add_phase("./Assets/Char2/c2.png");
-    characters[1]->add_phase("./Assets/Char1/c2.png");
-    characters[0]->set_static_position(4,5,MapManagement::F_SIZE);
-    characters[1]->set_static_position(4,7,MapManagement::F_SIZE);
-    st->add_static_object("../Assets/Rim.png",10,550,700*0.8,200*0.8);
-    st->add_static_object("./Assets/hero/hero_face.png",20,555,200*0.7,200 *0.7);
-    map = new MapManagement(renderer);
+    levels[0] = new Level_one();
+    levels[current_level]->Init(renderer);
 }
 
 Engine::~Engine(){}
-
-void Engine::init(){
-    delete hero;
-}
 
 void Engine::HandleEvents(){
     SDL_Event event;
@@ -48,14 +32,10 @@ void Engine::HandleEvents(){
             isRunning = false;
             break;
         case SDL_MOUSEBUTTONDOWN:
-            Input_Manager::handle_mouse_click(hero,map);
+            levels[current_level]->MouseDown();
         case SDL_MOUSEMOTION:
             int x,y;
-            SDL_GetMouseState(&x,&y);
-            for(int a = 0; a < characters.size(); a++){
-                Input_Manager::handle_mouse_movement(characters[a],x,y);
-            }
-            Input_Manager::handle_mouse_movement(hero,x,y);
+            levels[current_level]->MouseMove();
             break;
         default:
             break;
@@ -63,20 +43,12 @@ void Engine::HandleEvents(){
 }
 
 void Engine::Update(){
-    hero->update(MapManagement::F_SIZE);
-    for(int x = 0; x < characters.size();x++){
-        characters[x]->update(MapManagement::F_SIZE);
-    }
+    levels[current_level]->Update();
 }
 
 void Engine::Render(){
     SDL_RenderClear(renderer);
-    map->renderMap();
-    hero->render();
-     for(int x = 0; x < characters.size();x++){
-        characters[x]->render();
-    }
-    st->render(hero->get_stamina(),hero->get_patience());
+    levels[current_level]->Render();
     SDL_RenderPresent(renderer);
 }
 

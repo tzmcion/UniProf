@@ -15,7 +15,7 @@ MapManagement::MapManagement(SDL_Renderer *renderer){
     GREEN("[DONE]");
     SDL_SetRenderDrawBlendMode(renderer,SDL_BLENDMODE_BLEND);
     RESET("\nLoading Textures for Walls\Floor... ");
-    std::vector<std::string> paths = {"./Assets/floor.png", "./Assets/wall.png", "./Assets/desk.png","./Assets/toilet_paper.png","./Assets/board.png","./Assets/trash.png"};
+    std::vector<std::string> paths = {"./Assets/map/floor.png", "./Assets/map/wall.png", "./Assets/map/desk.png","./Assets/map/toilet_paper.png","./Assets/map/board.png","./Assets/map/trash.png"};
     field = new Field(ren,paths,F_SIZE,F_SIZE);
     GREEN("[DONE]");
 
@@ -33,6 +33,23 @@ void MapManagement::renderMap(){
     for(int x = 0; x < WIDTH; x++){
         for(int y = 0; y < HEIGHT; y++){
             field->render_field(board[x][y],x * F_SIZE, y * F_SIZE);
+        }
+    }
+}
+
+void MapManagement::higher_render(){
+    for(int x = 0; x < board_objects.size(); x++){
+        board_objects[x]->render();
+    }
+}
+
+void MapManagement::set_map(int map[][18]){
+    for (int i = 0; i < WIDTH; ++i) {
+        board[i] = new int[HEIGHT];
+        for(int j = 0; j < HEIGHT; j++){
+               board[i][j] = map[j][i];
+               if(map[j][i] == 4)
+               board_objects.push_back(new Board(ren,i,j,F_SIZE));
         }
     }
 }
@@ -71,6 +88,18 @@ void MapManagement::find_path_from(int x, int y, int curr_x,int curr_y ,std::vec
         m_moves.push_back(move);
     }
     moves = m_moves;
+}
+
+void MapManagement::handle_mouse_click(int x, int y){
+    for(int a = 0; a < board_objects.size(); a++){
+        board_objects[a]->handle_mouseclick(x,y);
+    }
+};
+
+void MapManagement::handle_mouse_movement(int x, int y){
+    for(int a = 0; a < board_objects.size(); a++){
+        board_objects[a]->handle_mouseover(x,y);
+    }
 }
 
 //Private functions
